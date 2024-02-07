@@ -1,0 +1,42 @@
+---
+title: "My project_1"
+author: "Rachael E."
+date: "2024-02-07"
+output: html_document
+---
+
+My first R markdown, many to come.
+Here is a project trying out descriptive stats, transformation and plotting
+
+#instaling package to read .xsl file
+```{r}
+library(readxl)
+Data_Commerce <- read_excel("~/Data_Commerce.xlsx")
+#view(Data_Commerce)
+#perform descriptive statistics on specific data values in data set : "Age,Gender and Customer ID
+Des_data <- c("Age","Gender","Customer ID")
+summary(Data_Commerce[, Des_data])
+table(Data_Commerce[, Des_data])
+```
+```{r}
+#Transforming my data: transforming Total_Spend data values by applying a 15% discount
+library(tidyverse)
+colnames(Data_Commerce)[6] <- "Total_Spend"
+Data_Commerce_arrange1 <- transform(Data_Commerce , Discount =(Total_Spend * 0.2))
+#view(Data_Commerce_arrange1)
+```
+
+```{r}
+#plotting graphs and plots using ggplot2
+library(ggplot2)
+colnames(Data_Commerce)[8] <- "Average_Rating"
+ggplot(data = Data_Commerce_arrange1 , mapping = aes(x=Average_Rating)) +
+  geom_bar(fill = "blue")
+```
+```{r}
+#scatterplots for Average_Rating and Age
+ggplot(data = Data_Commerce_arrange1 , mapping = aes(x=Average_Rating , y = Age)) +
+  geom_point(fill = "orange")
+```
+
+
